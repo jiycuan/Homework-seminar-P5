@@ -1,4 +1,5 @@
 # 1. Напишите программу, удаляющую из текста все слова, содержащие ""абв"".
+
 def zadacha_abc():
     text = str(input('Введите текст: '))
     trigger = 'абв'
@@ -132,12 +133,57 @@ def bot_brain(candy, candy_count): # Тут я подумал как надел�
 
 # 3. Создайте программу для игры в ""Крестики-нолики"".
 
+import math
 
+def fill_square(matrix):
+    for i in range (0, len(matrix), 3):
+        print(f" {matrix[i]} {matrix[i+1]} {matrix[i+2]} ")
+
+def change_players(player):
+    if player == "X":
+        player = "O"
+    else:
+        player = "X"
+    return player
+
+def move(player, field):
+    point = input(f"В поле с каким номером ставишь {player}? ")
+    if point.isdigit():
+        if 0 < int(point) < 10:
+            point = int(point) - 1
+            if field[point] != "X" and field[point] != "O":
+                return point
+            else:
+                print("Указанное поле занаято.")
+                return move(player, field)
+        else:
+            print("Такого поля не существует")
+            move(player, field)
+    else:
+        print("Введите поле цифрой от 1 до 9")
+        move(player, field)
+
+def x_o_game():
+    import math
+    field = []
+    for i in range (0,9):
+        field.append(i+1)
+
+    player = "X"
+    fill_square(field)
+    win = False
+    for i in range(9):
+        point = move(player, field)
+        field[int(point)] = player
+        fill_square(field)
+        player = change_players(player)
+
+#x_o_game()
 
 # 4. Реализуйте RLE алгоритм: реализуйте модуль сжатия и восстановления данных.
 
 def zadacha_rle():
-    iffer = int(input('Если нужно кодировать текст - введите 1. Для раскодирования - 0. '))
+    iffer = int(input('Если нужно кодировать текст - введите 1. Для раскодирования - что-нибудь более оригинальное. '))
     text = str(input('Введите текст: '))
     if iffer == 1:
         result = rle_in(text)
